@@ -24,11 +24,13 @@ router.get('/:id',async(req,res)=>{
         res.sendStatus(500);
     }
 })
-router.get('/:id',async(req,res)=>{
+router.post('/',async(req,res)=>{
+
     
     try {
-        let result = await db.add(req.params.username,req.params.username);
+        let result = await db.add(req.body.username,req.body.gpa);
         res.json(result);
+        
     } catch (error) {
         console.log(error);
         res.sendStatus(500);

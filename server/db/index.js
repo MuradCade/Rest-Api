@@ -1,6 +1,5 @@
 const mysql = require('mysql');
 const pool = mysql.createPool({
-    connectionLimit: 10,
     host: 'localhost',
     user:'root',
     password: '',
@@ -8,7 +7,13 @@ const pool = mysql.createPool({
 
 })
 
+if(pool){
+    console.log("db connected");
+}
+else{
+    console.log("db failed to connect");
 
+}
 let api = {};
 api.all = () =>{
     return new Promise((resolve,reject) =>{
@@ -36,11 +41,13 @@ api.one =  (id) =>{
 
 api.add =  (username,gpa) =>{
     return new Promise((resolve,reject)=>{
-        pool.query('insert into student values(?,?)',[username],[gpa], (err,result)=>{
+        pool.query("insert into student(username,gpa) value(??)",[username],[gpa], (err,result)=>{
             if(err){
                 return reject(err);
+                console.log("error saving failed");
             }
                 return resolve(result);
+                console.log("saved successfully");
         });
     });
 }
